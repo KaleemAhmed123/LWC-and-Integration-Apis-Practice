@@ -1,0 +1,39 @@
+<template>
+    <div class="main">
+        <div class="container">
+            <div class="input-container">
+                <h2>Enter Queries</h2>
+                <div class="input-boxes">
+                    <lightning-input onchange={handleChange} type="text" name="firstName" label="Enter First Name" class="input"></lightning-input>
+                    <lightning-input onchange={handleChange} type="text" name="lastName" label="Enter Last Name" class="input"></lightning-input>
+                    <lightning-input onchange={handleChange} type="text" name="email" label="Enter Email" class="input"></lightning-input>
+                    <lightning-input onchange={handleChange} type="number" name="numOfRecords" label="Enter Number of Records" value="10" class="input"></lightning-input>
+                </div>
+            </div>
+            <div class="table-container">
+                <h2>Records With Given Query</h2>
+
+                <!-- Data Table for records -->
+                <template if:true={records}>
+                    <lightning-datatable
+                        key-field="id"
+                        data={records}
+                        columns={columns}>
+                    </lightning-datatable>
+                </template>
+
+                <template if:true={empty}>
+                    <div class="no-record">
+                        <h2>No Data found with the given query</h2>
+                    </div>
+                </template>
+
+                <template if:true={errorBool}>
+                    <div class="error">
+                        <h2>Something Went Wrong..........</h2>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>
