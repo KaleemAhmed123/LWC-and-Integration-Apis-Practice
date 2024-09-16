@@ -4,9 +4,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: white;
 }
 .container {
-    width: 75%;
+    /* width: 75%; */
 }
 .input-container {
     padding: 1.5rem;

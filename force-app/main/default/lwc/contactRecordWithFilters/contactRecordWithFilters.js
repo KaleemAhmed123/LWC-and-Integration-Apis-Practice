@@ -9,6 +9,10 @@ const columns = [
 
 export default class ContactRecordWithFilters extends LightningElement {
     empty = true;
+    errorBool = false;
+    columns = columns;
+    records = null;
+
     @track contactObj = {
         firstName: null,
         lastName: null,
@@ -16,10 +20,7 @@ export default class ContactRecordWithFilters extends LightningElement {
         numOfRecords: 10 
     };
 
-    columns = columns;
-    records = null;
-    errorBool = false;
-
+    // $ to make parameter as reactive
     @wire(call, 
         {firstName: '$contactObj.firstName', 
         lastName: '$contactObj.lastName',

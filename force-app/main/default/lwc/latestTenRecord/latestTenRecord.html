@@ -1,0 +1,36 @@
+<template>
+    <div class="main">
+        <br/>
+        <lightning-input class="inp" label="Get Queried Account" value={query} onchange={updateQuery}></lightning-input>
+        <h2>Latest 10 Accounts </h2>
+        <br />
+        <div class="container">
+            <template lwc:if={records}>
+                <ul>
+                    <template for:each={records} for:item="record">
+                        <li key={record.Id}>
+                            {record.Name} <br />
+                            {record.Phone}
+                            {record.Owner.Name}
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template lwc:else>
+                <div class="empty">
+                    No Accounts Found.
+                </div>
+            </template>
+        </div>
+            <!-- <template lwc:if={records} style="height: 300px;">
+                <lightning-datatable
+                        key-field="id"
+                        data={records}
+                        columns={columns}>
+                </lightning-datatable>
+            </template>
+            <template lwc:else>
+                No Accounts Found.
+            </template> -->
+    </div>
+</template>
