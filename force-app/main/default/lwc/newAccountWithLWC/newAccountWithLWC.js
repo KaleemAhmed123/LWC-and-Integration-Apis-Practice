@@ -36,6 +36,21 @@ export default class newAccountWithLWC extends LightningElement {
 
     handleClickSubmit(e) {
         e.preventDefault();
+
+        // validation
+        if(this.accObj.name || this.accObj.phone) {
+            const event = new ShowToastEvent({
+                title: 'Fill All the values',
+                variant: 'Warning',
+                message: `Please fill the required field.`,
+
+            });
+            this.dispatchEvent(event);
+            return;
+        }
+
+
+
         call({
             name: this.accObj.name,
             phone: this.accObj.phone,

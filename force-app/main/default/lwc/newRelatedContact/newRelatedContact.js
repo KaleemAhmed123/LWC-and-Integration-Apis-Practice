@@ -42,6 +42,19 @@ export default class NewRelatedContact extends LightningElement {
     }
 
     handleClickSubmit(e) {
+
+        // basic bvalidation
+        if(!this.contactObj.lastName || !this.contactObj.leadSource) {
+            const event = new ShowToastEvent({
+                title: 'Fill All the values',
+                variant: 'Warning',
+                message: `Please fill the required field.`,
+
+            });
+            this.dispatchEvent(event);
+            return;
+        }
+
         e.preventDefault();
         call({
             accountId: this.recordId,
