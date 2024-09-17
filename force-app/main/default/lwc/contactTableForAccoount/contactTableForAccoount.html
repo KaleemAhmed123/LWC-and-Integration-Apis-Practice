@@ -1,0 +1,26 @@
+<template>
+  <div class="container">
+    <lightning-combobox
+      name="accountList"
+      label="Accounts"
+      options={options}
+      onchange={handleChange}
+      class="slds-m-top_small input"
+      required
+    >
+    </lightning-combobox>
+
+    <template lwc:if={relatedContacts}>
+      <lightning-datatable
+        key-field="id"
+        data={relatedContacts}
+        columns={columns}
+        class="slds-m-top_medium table"
+      >
+      </lightning-datatable>
+    </template>
+    <template lwc:else>
+      <h2>No Contacts Found</h2>
+    </template>
+  </div>
+</template>
