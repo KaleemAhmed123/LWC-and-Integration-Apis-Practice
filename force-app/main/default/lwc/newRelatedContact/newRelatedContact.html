@@ -1,14 +1,30 @@
 <template>
     <div class="input-container">
-        <h2>Enter Account Details</h2>
+        <h2>Enter Contact Details</h2>
         <div class="input-boxes">
             <lightning-input 
                 onchange={handleChange} 
                 type="text" 
-                label="Enter Name" 
-                name="name"  
-                value={accObj.name}
+                label="Enter First Name" 
+                name="firstName"  
+                value={contactObj.firstName}
+                class="slds-m-top_small input">
+            </lightning-input>
+            <lightning-input 
+                onchange={handleChange} 
+                type="text" 
+                label="Enter Last Name" 
+                name="lastName"  
+                value={contactObj.lastName}
                 required
+                class="slds-m-top_small input">
+            </lightning-input>
+            <lightning-input 
+                onchange={handleChange} 
+                type="text" 
+                label="Enter Title" 
+                name="title"  
+                value={contactObj.title}
                 class="slds-m-top_small input">
             </lightning-input>
 
@@ -17,34 +33,33 @@
                 type="tel" 
                 label="Enter Phone" 
                 name="phone" 
-                value={accObj.phone}
-                placeholder="Account phone" 
+                value={contactObj.phone}
+                placeholder="Contact phone" 
                 class="slds-m-top_small input">
             </lightning-input>
-
             <lightning-input 
                 onchange={handleChange} 
-                type="url" 
-                label="Enter Website" 
-                name="website" 
-                value={accObj.website}
-                placeholder="Enter valid URL here..." 
+                type="email" 
+                label="Enter Email" 
+                name="email" 
+                value={contactObj.email}
+                placeholder="Contact Email" 
                 class="slds-m-top_small input">
             </lightning-input>
 
             <lightning-input 
                 onchange={handleChange} 
                 type="date" 
-                label="Enter a Date" 
-                name="lastPurchaseDate" 
-                value={accObj.lastPurchaseDate}
+                label="Enter Birthday" 
+                name="birthday" 
+                value={contactObj.birthday}
                 class="slds-m-top_small input">
             </lightning-input>
 
             <lightning-combobox
-                name="rating"
-                label="Select Rating"
-                value={accObj.rating}
+                name="leadSource"
+                label="Lead Source"
+                value={contactObj.leadSource}
                 options={option}
                 onchange={handleChange}
                 class="slds-m-top_small input"
@@ -52,12 +67,12 @@
             </lightning-combobox>
 
             <lightning-input 
-            onchange={handleChange} 
+                onchange={handleChange} 
                 type="checkbox" 
-                label="Is Account Intel ?" 
-                name="isIntel" 
-                checked={accObj.isIntel}
-                class="slds-m-top_small input intel">
+                label="Is Contact Dead ?" 
+                name="isDead" 
+                checked={contactObj.isDead}
+                class="slds-m-top_small input dead">
             </lightning-input>
 
             <div class="btn-container">

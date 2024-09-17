@@ -1,22 +1,21 @@
 .input-container {
     background: white;
-    padding: 1.25rem;
-    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.2);
     margin-top: 0.8rem;
 }
 .input-boxes {
-    padding: 1rem;
+    padding: 0.5rem;
 }
 .btn-container {
     display: flex;
     justify-content: center;
 }
-.input {
-}
+
 .btn {
     margin-right: 1rem;
 }
-.intel {
+.dead {
     margin-bottom: 1rem;
 }
 h2 {
