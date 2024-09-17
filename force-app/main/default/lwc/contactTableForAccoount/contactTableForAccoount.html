@@ -10,17 +10,37 @@
     >
     </lightning-combobox>
 
-    <template lwc:if={relatedContacts}>
+    <lightning-button
+      variant="brand-outline"
+      label="Show Std Table"
+      name="stdTable"
+      onclick={handleClick}
+      class="slds-m-left_x-small"
+    ></lightning-button>
+    <lightning-button
+      variant="brand-outline"
+      label="Show Custom Table"
+      name="customTable"
+      onclick={handleClick}
+      class="slds-m-left_x-small"
+    ></lightning-button>
+
+    <template lwc:if={showStdTable}>
       <lightning-datatable
         key-field="id"
         data={relatedContacts}
         columns={columns}
-        class="slds-m-top_medium table"
+        class="slds-m-top_medium table std-table"
       >
       </lightning-datatable>
     </template>
-    <template lwc:else>
-      <h2>No Contacts Found</h2>
+
+    <template lwc:elseif={showCustomTable}>
+      <h2 class="custom-table">Custom Table</h2>
+    </template>
+
+    <template lwc:elseif={noRelated}>
+      <h2 class="no-contacts">No Contacts Found</h2>
     </template>
   </div>
 </template>

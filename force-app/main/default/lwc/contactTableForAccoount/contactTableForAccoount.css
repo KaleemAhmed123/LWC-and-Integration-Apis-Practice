@@ -8,3 +8,10 @@
 .input {
   margin-bottom: 1rem;
 }
+/* temporary  */
+.custom-table {
+  font-weight: bold;
+  font-size: 150%;
+  text-align: center;
+  margin-top: 1rem;
+}

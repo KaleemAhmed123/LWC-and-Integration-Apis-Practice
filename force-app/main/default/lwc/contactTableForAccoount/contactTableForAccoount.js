@@ -18,6 +18,9 @@ export default class ContactTableForAccount extends LightningElement {
   options = [];
   columns = contactCols;
 
+  showStdTable = false;
+  showCustomTable = false;
+
   @wire(getUniqueAccount)
   wiredAccount({ error, data }) {
     if (data) {
@@ -53,6 +56,8 @@ export default class ContactTableForAccount extends LightningElement {
             message: `Please fill the required field.`
           });
           this.dispatchEvent(event);
+          console.log("No Related Contacts.....");
+
           return;
         }
         console.log(JSON.stringify(this.relatedContacts));
@@ -63,5 +68,15 @@ export default class ContactTableForAccount extends LightningElement {
     //   this.selectedAccountLabel,
     //   this.selectedAccountId
     // );
+  }
+
+  handleClick(e) {
+    if (e.target.name === "stdTable") {
+      this.showStdTable = true;
+      this.showCustomTable = false;
+    } else {
+      this.showStdTable = false;
+      this.showCustomTable = true;
+    }
   }
 }
