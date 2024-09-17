@@ -1,0 +1,22 @@
+.input-container {
+    background: white;
+    padding: 1.25rem;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.2);
+}
+.input-boxes {
+    padding: 1rem;
+}
+
+.input {
+}
+.btn {
+    margin-right: 1rem;
+}
+.intel {
+    margin-bottom: 1rem;
+}
+h2 {
+    font-weight: bold;
+    font-size: 150%;
+    text-align: center;
+}

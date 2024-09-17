@@ -11,9 +11,7 @@ public with sharing class contactRecordsWithFilters {
         query += ' AND FirstName LIKE :firstNameWildAdded';
         query += ' AND Email LIKE :emailWildAdded';
         query += ' LIMIT :recordsToQuery';
-        
-        // if(query.contains('LIMIT'))
-        //     throw new DmlException('An error occurred while processing the request.');
+
         return Database.query(query);
     }
 }

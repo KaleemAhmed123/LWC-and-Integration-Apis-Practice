@@ -1,0 +1,81 @@
+<template>
+    <div class="input-container">
+        <h2>Enter Values</h2>
+        <div class="input-boxes">
+            <lightning-input 
+                onchange={handleChange} 
+                type="text" 
+                label="Enter Name" 
+                name="name"  
+                value={accObj.name}
+                required
+                class="slds-m-top_small input">
+            </lightning-input>
+
+            <lightning-input 
+                onchange={handleChange} 
+                type="tel" 
+                label="Enter Phone" 
+                name="phone" 
+                value={accObj.phone}
+                placeholder="Account phone" 
+                class="slds-m-top_small input">
+            </lightning-input>
+
+            <lightning-input 
+                onchange={handleChange} 
+                type="url" 
+                label="Enter Website" 
+                name="website" 
+                value={accObj.website}
+                placeholder="Enter valid URL here..." 
+                class="slds-m-top_small input">
+            </lightning-input>
+
+            <lightning-input 
+                onchange={handleChange} 
+                type="date" 
+                label="Enter a Date" 
+                name="lastPurchaseDate" 
+                value={accObj.lastPurchaseDate}
+                class="slds-m-top_small input">
+            </lightning-input>
+
+            <lightning-combobox
+                name="rating"
+                label="Select Rating"
+                value={ratingValue}
+                options={option}
+                onchange={handleChange}
+                class="slds-m-top_small input"
+                required>
+            </lightning-combobox>
+
+            <lightning-input 
+            onchange={handleChange} 
+                type="checkbox" 
+                label="Is Intel" 
+                name="isIntel" 
+                value={accObj.isIntel}
+                class="slds-m-top_small input intel">
+            </lightning-input>
+
+
+            <lightning-button 
+                variant="brand" 
+                label="Create Account" 
+                title="Primary action" 
+                onclick={handleClickSubmit} 
+                class="btn">
+            </lightning-button>
+
+            <lightning-button 
+                label="Cancel" 
+                title="Primary action" 
+                onclick={handleClickCancel} 
+                class="btn">
+            </lightning-button>
+
+        </div>
+    </div>
+</template>

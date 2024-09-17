@@ -6,7 +6,6 @@ const columns = [
     {label:"First Name", fieldName:"FirstName"},
     {label:"Email", fieldName:"Email"}
 ];
-
 export default class ContactRecordWithFilters extends LightningElement {
     empty = true;
     errorBool = false;
@@ -19,7 +18,6 @@ export default class ContactRecordWithFilters extends LightningElement {
         email: null,
         numOfRecords: 10 
     };
-
     // $ to make parameter as reactive
     @wire(call, 
         {firstName: '$contactObj.firstName', 
@@ -32,7 +30,6 @@ export default class ContactRecordWithFilters extends LightningElement {
             this.empty = (data.length === 0) ? true: false;
             this.records = data;
             this.errorBool = false;
-            // console.log(data, "  ===>   ", this.records, this.empty);
         } 
         if(error) {
             this.records = null;
@@ -43,9 +40,7 @@ export default class ContactRecordWithFilters extends LightningElement {
     handleChange(e) {
         const name = e.target.name;
         const value = e.target.value;
-
         this.contactObj = { ...this.contactObj, [name]: value };
-
         console.log('Updated contactObj:', JSON.stringify(this.contactObj));
     }
 }

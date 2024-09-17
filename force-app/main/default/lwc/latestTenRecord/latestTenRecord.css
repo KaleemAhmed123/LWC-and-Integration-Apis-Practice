@@ -12,12 +12,13 @@ li {
 
 .container {
     border: 2px solid black;
-    background: lightgray;
+    background: white;
+    color: black;
     padding: 1rem;
 }
 .main {
     padding: 2rem;
-    width: 100%;
+    width: 50%;
     height: 100vh;
     display: flex;
     flex-direction: column;
