@@ -17,7 +17,13 @@ public with sharing class getAccountsForSelect {
   @AuraEnabled(cacheable=false)
   public static List<Contact> getRelatedContacts(String accId) {
     return [
-      SELECT LastName, FirstName, Phone, AccountId, Account.Name
+      SELECT
+        LastName,
+        FirstName,
+        Phone,
+        AccountId,
+        Account.Name,
+        Account.Owner.Name
       FROM Contact
       WHERE AccountId = :accId
     ];

@@ -6,7 +6,8 @@ const contactCols = [
   { label: "Last Name", fieldName: "LastName" },
   { label: "First Name", fieldName: "FirstName", type: "text" },
   { label: "Phone", fieldName: "Phone", type: "phone" },
-  { label: "Parent Id", fieldName: "AccountId", type: "text" }
+  { label: "Parent Id", fieldName: "AccountId", type: "text" },
+  { label: "Record Owner", fieldName: "Contact.Owner.Name", type: "text" }
 ];
 
 // LastName, FirstName, Phone, AccountId, Account.Name

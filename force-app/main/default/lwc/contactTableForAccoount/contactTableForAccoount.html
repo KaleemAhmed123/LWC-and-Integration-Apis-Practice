@@ -1,46 +1,73 @@
 <template>
-  <div class="container">
-    <lightning-combobox
-      name="accountList"
-      label="Accounts"
-      options={options}
-      onchange={handleChange}
-      class="slds-m-top_small input"
-      required
-    >
-    </lightning-combobox>
-
-    <lightning-button
-      variant="brand-outline"
-      label="Show Std Table"
-      name="stdTable"
-      onclick={handleClick}
-      class="slds-m-left_x-small"
-    ></lightning-button>
-    <lightning-button
-      variant="brand-outline"
-      label="Show Custom Table"
-      name="customTable"
-      onclick={handleClick}
-      class="slds-m-left_x-small"
-    ></lightning-button>
-
-    <template lwc:if={showStdTable}>
-      <lightning-datatable
-        key-field="id"
-        data={relatedContacts}
-        columns={columns}
-        class="slds-m-top_medium table std-table"
+  <div class="main">
+    <div class="container">
+      <lightning-combobox
+        name="accountList"
+        label="Accounts"
+        options={options}
+        onchange={handleChange}
+        class="slds-m-top_small input"
+        required
       >
-      </lightning-datatable>
-    </template>
+      </lightning-combobox>
 
-    <template lwc:elseif={showCustomTable}>
-      <h2 class="custom-table">Custom Table</h2>
-    </template>
+      <div class="btn-container">
+        <lightning-button
+          label="Standard Table"
+          variant="Brand"
+          name="stdTable"
+          onclick={handleClick}
+          class=""
+        ></lightning-button>
+        <lightning-button
+          variant="brand-outline"
+          label="Custom Table"
+          name="customTable"
+          onclick={handleClick}
+          class="slds-m-left_x-small custom-btn"
+        ></lightning-button>
+      </div>
 
-    <template lwc:elseif={noRelated}>
-      <h2 class="no-contacts">No Contacts Found</h2>
-    </template>
+      <template lwc:if={showStdTable}>
+        <lightning-datatable
+          key-field="id"
+          data={relatedContacts}
+          columns={columns}
+          class="slds-m-top_medium table std-table"
+        >
+        </lightning-datatable>
+      </template>
+
+      <template lwc:elseif={showCustomTable}>
+        <div class="table-container">
+          <table>
+            <tr>
+              <template for:each={columns} for:item="col">
+                <th key={col.label}>{col.label}</th>
+              </template>
+            </tr>
+            <template for:each={relatedContacts} for:item="contact">
+              <tr key={contact.Id} class="data-row">
+                <td>{contact.LastName}</td>
+                <td>{contact.FirstName}</td>
+                <td>
+                  <p>
+                    <lightning-formatted-phone
+                      value={contact.Phone}
+                    ></lightning-formatted-phone>
+                  </p>
+                </td>
+                <td>{contact.AccountId}</td>
+                <td>{contact.Account.Owner.Name}</td>
+              </tr>
+            </template>
+          </table>
+        </div>
+      </template>
+
+      <template lwc:elseif={noRelated}>
+        <h2 class="no-contacts">No Contacts Found</h2>
+      </template>
+    </div>
   </div>
 </template>
