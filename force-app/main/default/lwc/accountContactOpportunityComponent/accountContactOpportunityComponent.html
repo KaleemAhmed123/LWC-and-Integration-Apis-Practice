@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div title="Create Records at once" class="card">
+    <div title="Create Records at once" class="card-container">
       <lightning-card title="New Account" icon-name="standard:account">
         <div class="card">
           <lightning-input
@@ -9,6 +9,7 @@
             data-obj="accObj"
             value={accObj.name}
             onchange={handleChange}
+            class="input"
             required
           >
           </lightning-input>
@@ -19,6 +20,7 @@
             value={accObj.phone}
             type="phone"
             onchange={handleChange}
+            class="input"
           >
           </lightning-input>
           <lightning-input
@@ -27,16 +29,13 @@
             data-obj="accObj"
             value={accObj.desc}
             onchange={handleChange}
+            class="input"
           >
           </lightning-input>
         </div>
       </lightning-card>
 
-      <lightning-card
-        title="New Contact"
-        icon-name="standard:contact"
-        class="card"
-      >
+      <lightning-card title="New Contact" icon-name="standard:contact">
         <div class="card">
           <lightning-input
             name="firstName"
@@ -44,6 +43,7 @@
             data-obj="conObj"
             value={conObj.firstName}
             onchange={handleChange}
+            class="input"
           >
           </lightning-input>
           <lightning-input
@@ -52,6 +52,7 @@
             data-obj="conObj"
             value={conObj.lastName}
             onchange={handleChange}
+            class="input"
             required
           >
           </lightning-input>
@@ -62,6 +63,7 @@
             value={conObj.email}
             type="email"
             onchange={handleChange}
+            class="input"
           >
           </lightning-input>
         </div>
@@ -75,6 +77,7 @@
             data-obj="oppObj"
             value={oppObj.name}
             onchange={handleChange}
+            class="input"
             required
           >
           </lightning-input>
@@ -85,6 +88,7 @@
             value={oppObj.stage}
             type="text"
             onchange={handleChange}
+            class="input"
             required
           >
           </lightning-input>
@@ -95,6 +99,7 @@
             value={oppObj.closeDate}
             type="date"
             onchange={handleChange}
+            class="input"
             required
           >
           </lightning-input>
@@ -105,10 +110,16 @@
     <div class="btn-container">
       <lightning-button
         label="Create Records"
-        variant="brand-outline"
+        variant="brand"
         name="submit"
-        class="btn"
+        class="slds-align-centre btn"
         onclick={handleSubmit}
+      ></lightning-button>
+      <lightning-button
+        label="Clear"
+        variant="brand-variant"
+        name="Clear"
+        onclick={clearForm}
       ></lightning-button>
     </div>
   </div>

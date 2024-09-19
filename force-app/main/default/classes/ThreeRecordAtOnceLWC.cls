@@ -38,7 +38,8 @@ public with sharing class ThreeRecordAtOnceLWC {
       insert con;
       insert opp;
     } catch (Exception e) {
-      throw new AuraHandledException('Error  : ' + e.getMessage());
+      // throw new AuraHandledException('Error  : ' + e.getMessage());
+      system.debug('Only account got created');
     }
 
     return acc.Id;
