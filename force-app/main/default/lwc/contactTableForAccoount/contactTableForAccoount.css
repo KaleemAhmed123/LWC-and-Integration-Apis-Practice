@@ -1,21 +1,17 @@
 .main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
   width: 100%;
   padding: 0.5rem;
+  background: white;
 }
 
 .container {
-  padding: 1.25rem;
-  border: 1px solid gray;
+  width: 100%;
+  padding: 1rem;
 }
 
 .table {
   width: 100%;
-  margin-top: 1rem !important;
-  transition: all 0.5s ease-in-out;
+  margin-top: 1rem;
 }
 
 .input {
@@ -23,48 +19,23 @@
   width: 100%;
 }
 
-.custom-table {
-  font-weight: bold;
-  font-size: 150%;
-  text-align: center;
-  margin-top: 1rem;
-}
-
 .btn-container {
   margin-bottom: 1rem;
-  padding: 0;
-}
-
-.custom-btn {
-  background: #b37c06 !important;
 }
 
 th,
 td {
   border-bottom: 1px solid #c4dcf3;
-  padding: 0.5rem;
-  border-radius: 1px;
+  padding: 0.4rem 0.6rem;
 }
 
 th {
-  background: #427fef;
+  background: #3b75e0;
   color: white;
 }
 
-tr:nth-child(odd) {
-  background: #eef7ff;
-}
-
-tr:nth-child(odd) {
-  background: #eef7ff;
-}
-
-th {
-  border-right: 1.5px solid lightgray;
-}
 tr:hover {
   background: #eef7ff;
   transform: scale(1.01);
-  overflow: hidden;
   transition: transform 0.3s ease-in-out;
 }

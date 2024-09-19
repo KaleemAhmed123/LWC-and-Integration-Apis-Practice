@@ -21,6 +21,7 @@ export default class ContactTableForAccount extends LightningElement {
 
   showStdTable = false;
   showCustomTable = false;
+  showBtns = false;
 
   @wire(getUniqueAccount)
   wiredAccount({ error, data }) {
@@ -45,30 +46,39 @@ export default class ContactTableForAccount extends LightningElement {
     this.selectedAccountId = e.target.value;
     console.log(e.target.value);
 
+    if (this.selectedAccountId == null) {
+      this.showBtns = false;
+      this.showStdTable = false;
+      this.showCustomTable = false;
+      return;
+    }
+
     if (this.selectedAccountId != null) {
+      this.showBtns = true;
       getRelatedContacts({ accId: this.selectedAccountId }).then((data) => {
         this.relatedContacts = data;
-
-        // no contacts show toast
         if (this.relatedContacts.length === 0) {
           const event = new ShowToastEvent({
             title: "No related contacts found",
             variant: "Warning",
-            message: `Please fill the required field.`
+            message: `No related contacts found.`
           });
           this.dispatchEvent(event);
-          console.log("No Related Contacts.....");
+
+          // reset table
+          this.showBtns = false;
+          this.showStdTable = false;
+          this.showCustomTable = false;
 
           return;
         }
-        console.log(JSON.stringify(this.relatedContacts));
+
+        this.showStdTable = false;
+        this.showCustomTable = false;
+
+        console.log(JSON.stringify(this.selectedAccountId));
       });
     }
-    // console.log(
-    //   "Selected Account:",
-    //   this.selectedAccountLabel,
-    //   this.selectedAccountId
-    // );
   }
 
   handleClick(e) {

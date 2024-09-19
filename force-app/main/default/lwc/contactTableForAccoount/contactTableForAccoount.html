@@ -1,6 +1,6 @@
 <template>
-  <div class="main">
-    <div class="container">
+  <div class="slds-grid slds-wrap slds-align_absolute-center main">
+    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 container">
       <lightning-combobox
         name="accountList"
         label="Accounts"
@@ -8,25 +8,25 @@
         onchange={handleChange}
         class="slds-m-top_small input"
         required
-      >
-      </lightning-combobox>
+      ></lightning-combobox>
 
-      <div class="btn-container">
-        <lightning-button
-          label="Standard Table"
-          variant="Brand"
-          name="stdTable"
-          onclick={handleClick}
-          class=""
-        ></lightning-button>
-        <lightning-button
-          variant="brand-outline"
-          label="Custom Table"
-          name="customTable"
-          onclick={handleClick}
-          class="slds-m-left_x-small custom-btn"
-        ></lightning-button>
-      </div>
+      <template lwc:if={showBtns}>
+        <div class="slds-grid btn-container">
+          <lightning-button
+            label="Standard Table"
+            variant="brand-outline"
+            name="stdTable"
+            onclick={handleClick}
+          ></lightning-button>
+          <lightning-button
+            variant="brand"
+            label="Custom Table"
+            name="customTable"
+            onclick={handleClick}
+            class="slds-m-left_x-small custom-btn"
+          ></lightning-button>
+        </div>
+      </template>
 
       <template lwc:if={showStdTable}>
         <lightning-datatable
@@ -34,33 +34,35 @@
           data={relatedContacts}
           columns={columns}
           class="slds-m-top_medium table std-table"
-        >
-        </lightning-datatable>
+        ></lightning-datatable>
       </template>
 
       <template lwc:elseif={showCustomTable}>
-        <div class="table-container">
+        <div class="table">
           <table>
-            <tr>
-              <template for:each={columns} for:item="col">
-                <th key={col.label}>{col.label}</th>
-              </template>
-            </tr>
-            <template for:each={relatedContacts} for:item="contact">
-              <tr key={contact.Id} class="data-row">
-                <td>{contact.LastName}</td>
-                <td>{contact.FirstName}</td>
-                <td>
-                  <p>
+            <thead>
+              <tr>
+                <template for:each={columns} for:item="col">
+                  <th key={col.label}>{col.label}</th>
+                </template>
+              </tr>
+            </thead>
+
+            <tbody>
+              <template for:each={relatedContacts} for:item="contact">
+                <tr key={contact.Id} class="data-row">
+                  <td>{contact.LastName}</td>
+                  <td>{contact.FirstName}</td>
+                  <td>
                     <lightning-formatted-phone
                       value={contact.Phone}
                     ></lightning-formatted-phone>
-                  </p>
-                </td>
-                <td>{contact.AccountId}</td>
-                <td>{contact.Account.Owner.Name}</td>
-              </tr>
-            </template>
+                  </td>
+                  <td>{contact.AccountId}</td>
+                  <td>{contact.Account.Owner.Name}</td>
+                </tr>
+              </template>
+            </tbody>
           </table>
         </div>
       </template>

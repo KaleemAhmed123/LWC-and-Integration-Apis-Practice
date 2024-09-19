@@ -1,0 +1,115 @@
+<template>
+  <div class="container">
+    <div title="Create Records at once" class="card">
+      <lightning-card title="New Account" icon-name="standard:account">
+        <div class="card">
+          <lightning-input
+            name="name"
+            label="Account Name"
+            data-obj="accObj"
+            value={accObj.name}
+            onchange={handleChange}
+            required
+          >
+          </lightning-input>
+          <lightning-input
+            name="phone"
+            label="Account Phone"
+            data-obj="accObj"
+            value={accObj.phone}
+            type="phone"
+            onchange={handleChange}
+          >
+          </lightning-input>
+          <lightning-input
+            name="desc"
+            label="Account Description"
+            data-obj="accObj"
+            value={accObj.desc}
+            onchange={handleChange}
+          >
+          </lightning-input>
+        </div>
+      </lightning-card>
+
+      <lightning-card
+        title="New Contact"
+        icon-name="standard:contact"
+        class="card"
+      >
+        <div class="card">
+          <lightning-input
+            name="firstName"
+            label="Contact FirstName"
+            data-obj="conObj"
+            value={conObj.firstName}
+            onchange={handleChange}
+          >
+          </lightning-input>
+          <lightning-input
+            name="lastName"
+            label="Contact LastName"
+            data-obj="conObj"
+            value={conObj.lastName}
+            onchange={handleChange}
+            required
+          >
+          </lightning-input>
+          <lightning-input
+            name="email"
+            label="Contact Email"
+            data-obj="conObj"
+            value={conObj.email}
+            type="email"
+            onchange={handleChange}
+          >
+          </lightning-input>
+        </div>
+      </lightning-card>
+
+      <lightning-card title="New Opportunity" icon-name="standard:opportunity">
+        <div class="card last-child">
+          <lightning-input
+            name="name"
+            label="Opportunity Name"
+            data-obj="oppObj"
+            value={oppObj.name}
+            onchange={handleChange}
+            required
+          >
+          </lightning-input>
+          <lightning-input
+            name="stage"
+            label="Opportunity Stage"
+            data-obj="oppObj"
+            value={oppObj.stage}
+            type="text"
+            onchange={handleChange}
+            required
+          >
+          </lightning-input>
+          <lightning-input
+            name="closeDate"
+            label="Opportunity CloseDate"
+            data-obj="oppObj"
+            value={oppObj.closeDate}
+            type="date"
+            onchange={handleChange}
+            required
+          >
+          </lightning-input>
+        </div>
+      </lightning-card>
+    </div>
+
+    <div class="btn-container">
+      <lightning-button
+        label="Create Records"
+        variant="brand-outline"
+        name="submit"
+        class="btn"
+        onclick={handleSubmit}
+      ></lightning-button>
+    </div>
+  </div>
+</template>
