@@ -11,7 +11,6 @@ public with sharing class ThreeRecordAtOnceLWC {
     String oppStage,
     Date oppCloseDate
   ) {
-    // Create Account
     Account acc = new Account(
       Name = accName,
       Phone = accPhone,
@@ -19,27 +18,31 @@ public with sharing class ThreeRecordAtOnceLWC {
     );
     insert acc;
 
-    Contact con = new Contact(
-      LastName = conLastName,
-      FirstName = conFirstName,
-      Email = conEmail,
-      AccountId = acc.Id
-    );
+    if (acc != null && acc.Id != null) {
+      Contact con = new Contact(
+        LastName = conLastName,
+        FirstName = conFirstName,
+        Email = conEmail,
+        AccountId = acc.Id
+      );
 
-    Opportunity opp = new Opportunity(
-      Name = oppName,
-      StageName = oppStage,
-      CloseDate = oppCloseDate,
-      AccountId = acc.Id
-    );
+      Opportunity opp = new Opportunity(
+        Name = oppName,
+        StageName = oppStage,
+        CloseDate = oppCloseDate,
+        AccountId = acc.Id
+      );
 
-    // isse flow nahi rukna so try catch
-    try {
-      insert con;
-      insert opp;
-    } catch (Exception e) {
-      // throw new AuraHandledException('Error  : ' + e.getMessage());
-      system.debug('Only account got created');
+      try {
+        insert con;
+        insert opp;
+      } catch (Exception e) {
+        System.debug(
+          'Error inserting Contact or Opportunity: ' + e.getMessage()
+        );
+      }
+    } else {
+      throw new AuraHandledException('Account creation failed.');
     }
 
     return acc.Id;

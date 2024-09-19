@@ -42,7 +42,7 @@ export default class AccountContactOpportunityComponent extends NavigationMixin(
   }
 
   handleChange(e) {
-    const objType = e.target.dataset.obj; // 'accObj', 'conObj', 'oppObj'
+    const objType = e.target.dataset.obj; // 'accObj', 'conObj'...
     const name = e.target.name;
     const value = e.target.value;
 
