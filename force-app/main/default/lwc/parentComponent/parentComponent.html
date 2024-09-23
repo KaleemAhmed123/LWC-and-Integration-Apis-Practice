@@ -1,0 +1,28 @@
+<template>
+  <lightning-card title="Slider Parent Child Demo">
+    <lightning-input
+      label="Enter Percentage"
+      value={percentage}
+      onkeyup={handleChange}
+      type="Number"
+      min="0"
+      max="100"
+    ></lightning-input>
+    <div class="slider">
+      <h2>In parent: {percentage}</h2>
+      <lightning-button
+        variant="brand"
+        label="Reset Slider"
+        onclick={handleReset}
+      >
+      </lightning-button>
+      <lightning-button
+        variant="brand"
+        label="Child Reset"
+        onclick={childReset}
+      >
+      </lightning-button>
+      <c-child-component percentage={percentage}></c-child-component>
+    </div>
+  </lightning-card>
+</template>

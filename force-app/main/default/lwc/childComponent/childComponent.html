@@ -1,0 +1,14 @@
+<template>
+  <lightning-card title="Calling child method from parent">
+    <div class="slds-var-m-around_medium prolightning-progress-bar">
+      <lightning-progress-bar
+        value={percentage}
+        size="large"
+        onchange={changeHandler}
+      >
+      </lightning-progress-bar>
+      <br />
+      <p>{percentage}</p>
+    </div>
+  </lightning-card>
+</template>

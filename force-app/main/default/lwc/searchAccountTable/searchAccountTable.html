@@ -1,0 +1,61 @@
+<template>
+  <div class="container">
+    <div class="slds-grid">
+      <div class="slds-col slds-p-around_medium slds-size_4-of-5">
+        <lightning-input
+          name="query"
+          type="text"
+          label="Enter Account Name"
+          placeholder="type here..."
+          onchange={handleChange}
+          onkeypress={handleSubmitEnter}
+        ></lightning-input>
+      </div>
+
+      <div class="slds-col slds-p-around_medium slds-size_1-of-5 btn-outer">
+        <lightning-button
+          variant="brand"
+          label="Search"
+          title="Search"
+          onclick={handleSubmit}
+          class="btn"
+        ></lightning-button>
+      </div>
+    </div>
+
+    <div class="slds-m-top_small slds-p-around_medium table-container">
+      <template lwc:if={showTable}>
+        <lightning-datatable key-field="id" data={records} columns={columns}>
+        </lightning-datatable>
+      </template>
+    </div>
+    <!-- 
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <template for:each={columns} for:item="col">
+              <th key={col.label}>{col.label}</th>
+            </template>
+          </tr>
+        </thead>
+
+        <tbody>
+          <template for:each={records} for:item="account">
+            <tr key={account.Id} class="data-row">
+              <td onclick={redirect}>{account.Name}</td>
+              <td>{account.Website}</td>
+              <td>
+                <lightning-formatted-phone
+                  value={account.Phone}
+                ></lightning-formatted-phone>
+              </td>
+              <td>{account.Rating}</td>
+              <td>{account.Owner.Name}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div> -->
+  </div>
+</template>

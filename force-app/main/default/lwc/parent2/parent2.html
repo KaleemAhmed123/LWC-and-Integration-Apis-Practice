@@ -1,0 +1,14 @@
+<template>
+  <div class="container">
+    <lightning-card title="Child to parent communication">
+      <div class="slds-var-m-around_medium">
+        <lightning-button label="Show Modal" onclick={clickHandler}>
+        </lightning-button>
+        <!-- Section child hai -->
+        <template if:true={showModal}>
+          <c-child-2 onclose={closeHandler}></c-child-2>
+        </template>
+      </div>
+    </lightning-card>
+  </div>
+</template>

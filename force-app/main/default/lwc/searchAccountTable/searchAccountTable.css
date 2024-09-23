@@ -1,0 +1,16 @@
+* {
+  border: none;
+  outline: none;
+}
+.container {
+  background: white;
+  margin: 0 auto;
+}
+.input-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.btn-outer {
+  margin-top: 1.45rem;
+}
