@@ -6,6 +6,7 @@
         </lightning-button>
         <!-- Section child hai -->
         <template if:true={showModal}>
+          <!-- close btn child ke andar hai so waha se ek method invocation req hai -->
           <c-child-2 onclose={closeHandler}></c-child-2>
         </template>
       </div>
