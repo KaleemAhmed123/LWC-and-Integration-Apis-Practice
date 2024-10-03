@@ -10,6 +10,12 @@ global with sharing class TaskCustomApi1 {
         req.requestBody.toString(),
         TaskWrapper.class
       );
+
+      if(twr.status == null || twr.priority == null || twr.subject == null) {
+        ApiErrorHandler.setError(400, 'Must Enter status, priority and subject');
+        return;
+      }
+
       Task newTask = new Task(
         Subject = twr.subject,
         Priority = twr.priority,
