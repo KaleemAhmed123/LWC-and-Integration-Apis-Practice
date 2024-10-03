@@ -1,5 +1,5 @@
 @RestResource(urlMapping='/projectp1')
-global with sharing class CustomObjectApi {
+global with sharing class CustomObjectApi1 {
   @HttpPost
   global static void call() {
     RestResponse res = RestContext.response;
