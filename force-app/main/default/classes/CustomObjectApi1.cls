@@ -1,4 +1,4 @@
-@RestResource(urlMapping='/projectp1')
+@RestResource(urlMapping='/customobj1')
 global with sharing class CustomObjectApi1 {
   @HttpPost
   global static void call() {
@@ -35,8 +35,7 @@ global with sharing class CustomObjectApi1 {
 
       insert newProject;
 
-      res.statusCode = 201;
-      res.responseBody = Blob.valueOf(JSON.serialize(newProject));
+      ApiResponseHandler.setResponse(201, newProject);
     } catch (DmlException dmlex) {
       ApiErrorHandler.setError(500, 'DML Error: ' + dmlex.getMessage());
     } catch (Exception ex) {

@@ -36,14 +36,12 @@ global with sharing class contactpch1 {
       );
       update updateCon;
 
-      res.statusCode = 202;
-      res.responseBody = Blob.valueOf(
-        JSON.serialize(
-          'Email and Title updated Successfully to ' +
-            conwrp.Email +
-            ' and ' +
-            conwrp.Title
-        )
+      ApiResponseHandler.setResponse(
+        202,
+        'Email and Title updated Successfully to ' +
+          conwrp.Email +
+          ' and ' +
+          conwrp.Title
       );
     } catch (Exception ex) {
       ApiErrorHandler.setError(500, 'Internal Error' + ex.getMessage());

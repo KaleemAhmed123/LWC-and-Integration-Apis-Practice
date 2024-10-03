@@ -29,9 +29,7 @@ global with sharing class OpportunityPch1 {
         StageName = oppWpd.StageName
       );
       update updateOpp;
-
-      res.statusCode = 202;
-      res.responseBody = Blob.valueOf(JSON.serialize(updateOpp));
+      ApiResponseHandler.setResponse(202, updateOpp);
     } catch (Exception ex) {
       ApiErrorHandler.setError(500, 'Internal Error' + ex.getMessage());
     }

@@ -27,7 +27,7 @@ global with sharing class AccountPost1 {
 
       if (!accountsToInsert.isEmpty()) {
         insert accountsToInsert;
-        ApiErrorHandler.setError(201, 'Accounts successfully created.');
+        ApiResponseHandler.setResponse(201, 'Accounts inserted Successfully.');
       }
     } catch (DmlException dmlEx) {
       ApiErrorHandler.setError(400, 'Failed : ' + dmlEx.getMessage());

@@ -33,8 +33,7 @@ global with sharing class Contactp1 {
         AccountId = con.AccountId
       );
       insert newCon;
-      res.statusCode = 201;
-      res.responseBody = Blob.valueOf(JSON.serialize(newCon));
+      ApiResponseHandler.setResponse(201, newCon);
     } catch (DmlException dmlEx) {
       ApiErrorHandler.setError(500, 'Internal Error.');
     }

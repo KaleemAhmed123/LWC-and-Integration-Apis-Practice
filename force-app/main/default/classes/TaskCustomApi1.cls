@@ -11,8 +11,11 @@ global with sharing class TaskCustomApi1 {
         TaskWrapper.class
       );
 
-      if(twr.status == null || twr.priority == null || twr.subject == null) {
-        ApiErrorHandler.setError(400, 'Must Enter status, priority and subject');
+      if (twr.status == null || twr.priority == null || twr.subject == null) {
+        ApiErrorHandler.setError(
+          400,
+          'Must Enter status, priority and subject'
+        );
         return;
       }
 
@@ -22,9 +25,7 @@ global with sharing class TaskCustomApi1 {
         Status = twr.status
       );
       insert newTask;
-
-      res.statusCode = 201;
-      res.responseBody = Blob.valueOf(JSON.serialize(newTask));
+      ApiResponseHandler.setResponse(201, newTask);
     } catch (Exception ex) {
       ApiErrorHandler.setError(500, 'Internal Errror' + ex.getMessage());
     }

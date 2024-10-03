@@ -23,9 +23,9 @@ global with sharing class AccountPatch1 {
       Account acc = new Account(Id = accWrapped.Id, Phone = accWrapped.Phone);
       update acc;
 
-      res.statusCode = 202;
-      res.responseBody = Blob.valueOf(
-        JSON.serialize('Phone Update successfully to ' + accWrapped.Phone)
+      ApiResponseHandler.setResponse(
+        202,
+        'Phone Update successfully to ' + accWrapped.Phone
       );
     } catch (Exception ex) {
       ApiErrorHandler.setError(500, 'Internal Error ' + ex.getMessage());

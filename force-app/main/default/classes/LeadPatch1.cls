@@ -27,10 +27,9 @@ global with sharing class LeadPatch1 {
       }
 
       update updatedLeads;
-
-      res.statusCode = 202;
-      res.responseBody = Blob.valueOf(
-        JSON.serialize('Status updated on leads succesfully')
+      ApiResponseHandler.setResponse(
+        202,
+        'Status updated on leads succesfully'
       );
     } catch (Exception ex) {
       ApiErrorHandler.setError(500, 'Internal Errorr' + ex.getMessage());

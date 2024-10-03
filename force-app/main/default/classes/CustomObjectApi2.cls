@@ -29,8 +29,7 @@ global with sharing class CustomObjectApi2 {
 
       update newProject;
 
-      res.statusCode = 202;
-      res.responseBody = Blob.valueOf(JSON.serialize(newProject));
+      ApiResponseHandler.setResponse(202, newProject);
     } catch (DmlException dmlex) {
       ApiErrorHandler.setError(500, 'DML Error: ' + dmlex.getMessage());
     } catch (Exception ex) {
