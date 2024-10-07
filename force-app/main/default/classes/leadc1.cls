@@ -12,12 +12,9 @@ global class leadc1 {
         WHERE createdDate >= :lastWeekDate
         ORDER BY createdDate DESC
       ];
-      RestResponse res = RestContext.response;
       ApiResponseHandler.setResponse(200, leadList);
     } catch (Exception e) {
-      ApiErrorHandler.setError(500, 'Internal Error');
+      ApiErrorHandler.setError(500, 'Internal Error' + e.getMessage());
     }
-  }
-  global class RestException extends Exception {
   }
 }

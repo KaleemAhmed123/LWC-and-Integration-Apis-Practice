@@ -2,8 +2,6 @@
 global with sharing class LeadPatch1 {
   @HttpPatch
   global static void updateLeadStatus() {
-    RestResponse res = RestContext.response;
-
     RestRequest req = RestContext.request;
     try {
       LeadWrapper leadWpd = (LeadWrapper) JSON.deserialize(
@@ -20,16 +18,29 @@ global with sharing class LeadPatch1 {
         return;
       }
 
-      List<Lead> updatedLeads = new List<Lead>();
+      List<String> wrongIds = new List<String>();
+      List<Lead> leadToBeUpdatedList = new List<Lead>();
       for (String leadId : leadWpd.Ids) {
-        Lead updatedLead = new Lead(Id = leadId, Status = leadWpd.Status);
-        updatedLeads.add(updatedLead);
+        // apply individual validation here
+        // show that this this id is wrong
+        if (
+          String.isBlank(leadId) ||
+          !leadId.startsWith('00Q') ||
+          leadId.length() < 18
+        ) {
+          wrongIds.add(leadId);
+        } else {
+          Lead leadToBeUpdated = new Lead(Id = leadId, Status = leadWpd.Status);
+          leadToBeUpdatedList.add(leadToBeUpdated);
+        }
       }
 
-      update updatedLeads;
+      update leadToBeUpdatedList;
+
       ApiResponseHandler.setResponse(
         202,
-        'Status updated on leads succesfully'
+        'Lead Status Updated Successfully, following Ids are not valid: ' +
+        wrongIds
       );
     } catch (Exception ex) {
       ApiErrorHandler.setError(500, 'Internal Errorr' + ex.getMessage());
@@ -37,7 +48,7 @@ global with sharing class LeadPatch1 {
   }
 
   public class LeadWrapper {
-    List<String> Ids;
-    String Status;
+    public List<String> Ids;
+    public String Status;
   }
 }
