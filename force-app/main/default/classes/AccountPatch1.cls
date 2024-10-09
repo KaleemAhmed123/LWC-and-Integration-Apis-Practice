@@ -11,8 +11,8 @@ global with sharing class AccountPatch1 {
         accWrapper.class
       );
 
-      if (String.isBlank(accWrapped.Id)) {
-        ApiErrorHandler.setError(400, 'Provide Account Id');
+      if (!ApiFieldValidation.isValidId(accWrapped.Id, '001')) {
+        ApiErrorHandler.setError(400, 'Provide a valid Account Id');
         return;
       }
       if (String.isBlank(accWrapped.Phone)) {
@@ -20,12 +20,19 @@ global with sharing class AccountPatch1 {
         return;
       }
 
-      Account acc = new Account(Id = accWrapped.Id, Phone = accWrapped.Phone);
+      Account acc = [SELECT Id, Phone FROM Account WHERE Id = :accWrapped.Id];
+      acc.Phone = accWrapped.Phone;
       update acc;
 
       ApiResponseHandler.setResponse(
         202,
         'Phone Update successfully to ' + accWrapped.Phone
+      );
+    } catch (QueryException qex) {
+      ApiErrorHandler.setError(
+        400,
+        'Query Exception or no Account with the given Id. || ' +
+        qex.getMessage()
       );
     } catch (Exception ex) {
       ApiErrorHandler.setError(500, 'Internal Error ' + ex.getMessage());

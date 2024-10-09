@@ -2,8 +2,6 @@
 global with sharing class contactpch1 {
   @HttpPatch
   global static void updateEmailAndTitle() {
-    RestResponse res = RestContext.response;
-
     try {
       RestRequest req = RestContext.request;
       contactWrapper conwrp = (contactWrapper) JSON.deserialize(
@@ -11,32 +9,26 @@ global with sharing class contactpch1 {
         contactWrapper.class
       );
 
-      if (String.isBlank(conwrp.Email)) {
-        ApiErrorHandler.setError(400, 'Provide Email plz');
+      if (
+        String.isBlank(conwrp.Email) ||
+        !ApiFieldValidation.isValidEmail(conwrp.Email)
+      ) {
+        ApiErrorHandler.setError(400, 'Provide a valid Email plz.');
         return;
       }
-
       if (String.isBlank(conwrp.Title)) {
         ApiErrorHandler.setError(400, 'Provide Title plz');
         return;
       }
-      if (
-        (String.isBlank(conwrp.Id) || !conwrp.Id.startsWith('003')) &&
-        (conwrp.Id.length() != 18 &&
-        conwrp.Id.length() != 15)
-      ) {
-        ApiErrorHandler.setError(400, 'Provide valid contact Id plz');
+      if (!ApiFieldValidation.isValidId(conwrp.Id, '003')) {
+        ApiErrorHandler.setError(400, 'Provide valid a contact Id plz.');
         return;
       }
 
       Contact con = [SELECT Id FROM Contact WHERE Id = :conwrp.Id];
-
-      Contact updateCon = new Contact(
-        Id = conwrp.Id,
-        Title = conwrp.Title,
-        Email = conwrp.Email
-      );
-      update updateCon;
+      con.Title = conwrp.Title;
+      con.Email = conwrp.Email;
+      update con;
 
       ApiResponseHandler.setResponse(
         202,

@@ -9,14 +9,27 @@ global with sharing class ContactPut1 {
     String conId = (String) reqBody.get('Id');
     Boolean isNew = (conId == null);
 
-    if (!isNew && (!conId.startsWith('003') || (conId.length() != 18 && conId.length() != 15))) {
+    if (!isNew && !ApiFieldValidation.isValidId(conId, '003')) {
       ApiErrorHandler.setError(400, 'Provide valid contact Id');
       return;
     }
 
     Contact con = new Contact();
     for (String field : reqBody.keySet()) {
-      con.put(field, reqBody.get(field));
+      Object value = reqBody.get(field);
+      if (!field.toLowerCase().contains('date')) {
+        con.put(field, reqBody.get(field));
+      } else {
+        try {
+          con.put(field, Date.valueOf((String) value));
+        } catch (Exception e) {
+          ApiErrorHandler.setError(
+            400,
+            'Invalid date format for field ' + field
+          );
+          return;
+        }
+      }
     }
     upsert con;
 

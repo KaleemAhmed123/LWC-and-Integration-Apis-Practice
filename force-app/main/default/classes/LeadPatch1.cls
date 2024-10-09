@@ -23,11 +23,7 @@ global with sharing class LeadPatch1 {
       for (String leadId : leadWpd.Ids) {
         // apply individual validation here
         // show that this this id is wrong
-        if (
-          String.isBlank(leadId) ||
-          !leadId.startsWith('00Q') ||
-          leadId.length() < 18
-        ) {
+        if (!ApiFieldValidation.isValidId(leadId, '00Q')) {
           wrongIds.add(leadId);
         } else {
           Lead leadToBeUpdated = new Lead(Id = leadId, Status = leadWpd.Status);
@@ -35,7 +31,7 @@ global with sharing class LeadPatch1 {
         }
       }
 
-      update leadToBeUpdatedList;
+      Database.update(leadToBeUpdatedList);
 
       ApiResponseHandler.setResponse(
         202,

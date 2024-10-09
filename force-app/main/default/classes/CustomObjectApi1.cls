@@ -2,8 +2,6 @@
 global with sharing class CustomObjectApi1 {
   @HttpPost
   global static void call() {
-    RestResponse res = RestContext.response;
-
     try {
       RestRequest req = RestContext.request;
       ProjectWrapper pwr = (ProjectWrapper) JSON.deserialize(

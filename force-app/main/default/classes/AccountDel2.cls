@@ -10,12 +10,8 @@ global with sharing class AccountDel2 {
     List<Account> delAcc = [SELECT Id, Name FROM Account WHERE Id = :Id];
 
     // 001dM00001vrRdSQA
-    if (
-      !String.isBlank(Id) && !Id.startsWith('001') ||
-      (id.length() != 18 &&
-      id.length() != 15)
-    ) {
-      ApiErrorHandler.setError(500, 'Invalid Account ID!');
+    if (!ApiFieldValidation.isValidId(id, '001')) {
+      ApiErrorHandler.setError(400, 'Invalid Account ID!');
       return;
     }
     try {
@@ -57,11 +53,14 @@ global with sharing class AccountDel2 {
           'Account With Id: ' + Id + ' Deleted Successfully. ' + cascadeMessage
         );
       } else {
-        ApiErrorHandler.setError(500, 'Error in deleting account. ');
+        ApiErrorHandler.setError(400, 'Error in deleting account. ');
         return;
       }
     } catch (QueryException e) {
-      ApiErrorHandler.setError(500, 'Query Error ' + e.getMessage());
+      ApiErrorHandler.setError(
+        400,
+        'Query Error (May not be a valid Id). || ' + e.getMessage()
+      );
     } catch (Exception e) {
       ApiErrorHandler.setError(500, 'Internal Error ' + e.getMessage());
     }

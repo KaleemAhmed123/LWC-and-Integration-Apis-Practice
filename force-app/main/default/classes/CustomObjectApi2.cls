@@ -2,8 +2,6 @@
 global with sharing class CustomObjectApi2 {
   @HttpPatch
   global static void updateProperties() {
-    RestResponse res = RestContext.response;
-
     try {
       RestRequest req = RestContext.request;
       ProjectWrapper pwr = (ProjectWrapper) JSON.deserialize(
@@ -11,25 +9,30 @@ global with sharing class CustomObjectApi2 {
         ProjectWrapper.class
       );
 
-      if (
-        String.isBlank(pwr.Id) ||
-        !pwr.Id.startsWith('a00') ||
-        pwr.Id.length() < 18
-      ) {
+      if (!ApiFieldValidation.isValidId(pwr.Id, 'a00')) {
         ApiErrorHandler.setError(400, 'Pleade Provide valid project Id');
         return;
       }
+      if (pwr.budget == null) {
+        ApiErrorHandler.setError(400, 'Pleade Provide project budget.');
+        return;
+      }
+      if (String.isBlank(pwr.status)) {
+        ApiErrorHandler.setError(400, 'Pleade Provide project status.');
+        return;
+      }
+      // owner not required
+      Project__c pj = [
+        SELECT Id, Budget__c, Status__c, Owner__c
+        FROM Project__c
+        WHERE Id = :pwr.Id
+      ];
+      pj.Budget__c = pwr.budget;
+      pj.Status__c = pwr.status;
+      pj.Owner__c = pwr.owner;
+      update pj;
 
-      Project__c newProject = new Project__c(
-        Id = pwr.Id,
-        Budget__c = pwr.budget,
-        Status__c = pwr.status,
-        Owner__c = pwr.owner
-      );
-
-      update newProject;
-
-      ApiResponseHandler.setResponse(202, newProject);
+      ApiResponseHandler.setResponse(202, pj);
     } catch (DmlException dmlex) {
       ApiErrorHandler.setError(500, 'DML Error: ' + dmlex.getMessage());
     } catch (Exception ex) {
