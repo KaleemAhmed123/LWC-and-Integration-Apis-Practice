@@ -2,10 +2,8 @@
 global with sharing class AccountPost1 {
   @HttpPost
   global static void createAccounts() {
-    RestResponse res = RestContext.response;
     try {
       RestRequest req = RestContext.request;
-
       List<AccountWrapper> awrList = (List<AccountWrapper>) JSON.deserialize(
         req.requestBody.toString(),
         List<AccountWrapper>.class
@@ -30,7 +28,7 @@ global with sharing class AccountPost1 {
         ApiResponseHandler.setResponse(201, 'Accounts inserted Successfully.');
       }
     } catch (DmlException dmlEx) {
-      ApiErrorHandler.setError(400, 'Failed : ' + dmlEx.getMessage());
+      ApiErrorHandler.setError(400, 'DML Error : ' + dmlEx.getMessage());
     } catch (Exception ex) {
       ApiErrorHandler.setError(500, 'Internal error : ' + ex.getMessage());
     }

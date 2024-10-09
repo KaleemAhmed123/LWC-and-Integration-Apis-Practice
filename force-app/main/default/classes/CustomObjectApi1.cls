@@ -11,23 +11,32 @@ global with sharing class CustomObjectApi1 {
         ProjectWrapper.class
       );
 
-      if (pwr.startDate == null) {
-        ApiErrorHandler.setError(400, 'Must Enter Start Date');
+      Date startDate, endDate;
+      try {
+        startDate = Date.valueOf(pwr.startDate);
+        endDate = Date.valueOf(pwr.endDate);
+      } catch (Exception ex) {
+        ApiErrorHandler.setError(
+          400,
+          'Must Enter a valid Date format yyyy-mm-dd'
+        );
         return;
       }
-      if (pwr.endDate == null) {
-        ApiErrorHandler.setError(400, 'Must Enter End Date');
+      if (String.isBlank(pwr.status)) {
+        ApiErrorHandler.setError(400, 'Must Enter project status.');
         return;
       }
-      if (pwr.budget == null) {
+      if (String.isBlank(pwr.budget)) {
         ApiErrorHandler.setError(400, 'Must Enter Project Budget');
         return;
       }
 
+      // project type and owner not required so not applying validations
+
       Project__c newProject = new Project__c(
-        Start_Date__c = pwr.startDate,
-        End_Date__c = pwr.endDate,
-        Budget__c = pwr.budget,
+        Start_Date__c = startDate,
+        End_Date__c = endDate,
+        Budget__c = Decimal.valueOf(pwr.budget),
         Status__c = pwr.status,
         Owner__c = pwr.owner,
         Project_Type__c = pwr.projectType
@@ -44,9 +53,9 @@ global with sharing class CustomObjectApi1 {
   }
 
   public class ProjectWrapper {
-    Date startDate;
-    Date endDate;
-    Decimal budget;
+    String startDate;
+    String endDate;
+    String budget;
     String status;
     String owner;
     String projectType;

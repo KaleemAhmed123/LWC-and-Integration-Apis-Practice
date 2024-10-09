@@ -2,30 +2,28 @@
 global with sharing class Contactp1 {
   @HttpPost
   global static void createAccounts() {
-    RestResponse res = RestContext.response;
     try {
       RestRequest req = RestContext.request;
       ContactWrapper con = (ContactWrapper) JSON.deserialize(
         req.requestBody.toString(),
         ContactWrapper.class
       );
+
       if (String.isBlank(req.requestBody.toString())) {
         ApiErrorHandler.setError(400, 'Body is empty.');
         return;
       }
-      if (con.LastName == null || con.LastName == '') {
+      if (String.isBlank(con.LastName)) {
         ApiErrorHandler.setError(400, 'Enter LastName.');
         return;
       }
-      if (
-        con.AccountId == null ||
-        con.AccountId == '' ||
-        !con.AccountId.startsWith('001') ||
-        con.AccountId.length() < 18
-      ) {
-        ApiErrorHandler.setError(400, 'Account Id is not correct.');
+      if (!ApiFieldValidation.isValidId(con.AccountId, '001')) {
+        ApiErrorHandler.setError(400, 'Enter a valid Account Id.');
         return;
       }
+      // query ex me le jaega
+      Account parent = [SELECT Id FROM Account WHERE Id = :con.AccountId];
+
       Contact newCon = new Contact(
         LastName = con.LastName,
         FirstName = con.FirstName,
@@ -34,8 +32,16 @@ global with sharing class Contactp1 {
       );
       insert newCon;
       ApiResponseHandler.setResponse(201, newCon);
-    } catch (DmlException dmlEx) {
-      ApiErrorHandler.setError(500, 'Internal Error.');
+    } catch (QueryException qe) {
+      ApiErrorHandler.setError(
+        500,
+        'No Account with this parent Id. || ' + qe.getMessage()
+      );
+    } catch (Exception ex) {
+      ApiErrorHandler.setError(
+        500,
+        'Internal Error. ' + ex.getMessage() + ex.getLineNumber()
+      );
     }
   }
 

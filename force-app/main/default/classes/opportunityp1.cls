@@ -2,8 +2,6 @@
 global with sharing class opportunityp1 {
   @HttpPost
   global static void createOpps() {
-    RestResponse res = RestContext.response;
-
     try {
       RestRequest req = RestContext.request;
       if (String.isBlank(req.requestBody.toString())) {
@@ -25,14 +23,21 @@ global with sharing class opportunityp1 {
 
       List<Opportunity> OpportunitiesToInsert = new List<Opportunity>();
       for (OpportunityWrapper oppwrapped : oppWrapperList) {
-        if (
-          String.isBlank(oppwrapped.Name) ||
-          String.isBlank(oppwrapped.StageName) ||
-          oppwrapped.CloseDate == null
-        ) {
+        if (String.isBlank(oppwrapped.Name)) {
+          ApiErrorHandler.setError(400, 'Must Enter Opportunity Name.');
+          return;
+        }
+        if (String.isBlank(oppwrapped.StageName)) {
+          ApiErrorHandler.setError(400, 'Must Enter StageName.');
+          return;
+        }
+
+        try {
+          Date closeDate = Date.valueOf(oppwrapped.CloseDate);
+        } catch (Exception ex) {
           ApiErrorHandler.setError(
             400,
-            'Must Enter Name, CloseDate and StageName.'
+            'Must Enter a valid Date format yyyy-mm-dd'
           );
           return;
         }
@@ -40,14 +45,13 @@ global with sharing class opportunityp1 {
         Opportunity opp = new Opportunity(
           Name = oppwrapped.name,
           StageName = oppwrapped.StageName,
-          CloseDate = oppwrapped.CloseDate
+          CloseDate = Date.valueOf(oppwrapped.CloseDate)
         );
         OpportunitiesToInsert.add(opp);
       }
 
       if (!OpportunitiesToInsert.isEmpty()) {
         insert OpportunitiesToInsert;
-
         ApiResponseHandler.setResponse(
           201,
           'Opportunities inserted succesfully'
@@ -63,6 +67,6 @@ global with sharing class opportunityp1 {
   public class OpportunityWrapper {
     public String Name;
     public String StageName;
-    public Date CloseDate;
+    public String CloseDate;
   }
 }

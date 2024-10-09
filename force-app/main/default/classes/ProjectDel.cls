@@ -5,7 +5,11 @@ global with sharing class ProjectDel {
     RestRequest req = RestContext.request;
     String Id = req.requestURI.substringAfterLast('/');
 
-    if (String.isBlank(Id) || !Id.startsWith('a00')) {
+    if (
+      !String.isBlank(Id) && !Id.startsWith('a00') ||
+      (Id.length() != 18 &&
+      Id.length() != 15)
+    ) {
       ApiErrorHandler.setError(400, 'Provide valid project Id.');
       return;
     }

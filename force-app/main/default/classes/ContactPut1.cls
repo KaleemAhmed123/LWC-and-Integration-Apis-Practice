@@ -9,7 +9,7 @@ global with sharing class ContactPut1 {
     String conId = (String) reqBody.get('Id');
     Boolean isNew = (conId == null);
 
-    if (!isNew && (!conId.startsWith('003') || conId.length() < 18)) {
+    if (!isNew && (!conId.startsWith('003') || (conId.length() != 18 && conId.length() != 15))) {
       ApiErrorHandler.setError(400, 'Provide valid contact Id');
       return;
     }

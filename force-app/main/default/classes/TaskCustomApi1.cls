@@ -2,8 +2,6 @@
 global with sharing class TaskCustomApi1 {
   @HttpPost
   global static void call() {
-    RestResponse res = RestContext.response;
-
     try {
       RestRequest req = RestContext.request;
       TaskWrapper twr = (TaskWrapper) JSON.deserialize(
@@ -14,15 +12,20 @@ global with sharing class TaskCustomApi1 {
       if (twr.status == null || twr.priority == null || twr.subject == null) {
         ApiErrorHandler.setError(
           400,
-          'Must Enter status, priority and subject'
+          'Must Enter status, priority and subject.'
         );
+        return;
+      }
+      if (!ApiFieldValidation.isValidId(twr.LeadId, '00Q')) {
+        ApiErrorHandler.setError(400, 'Must Enter a valid Lead Id.');
         return;
       }
 
       Task newTask = new Task(
         Subject = twr.subject,
         Priority = twr.priority,
-        Status = twr.status
+        Status = twr.status,
+        WhoId = twr.LeadId
       );
       insert newTask;
       ApiResponseHandler.setResponse(201, newTask);
@@ -32,10 +35,10 @@ global with sharing class TaskCustomApi1 {
   }
 
   public class TaskWrapper {
-    String subject;
-    String priority;
-    String status;
-    // String assignedTo;
+    public String subject;
+    public String priority;
+    public String status;
+    public String LeadId;
   }
 }
 

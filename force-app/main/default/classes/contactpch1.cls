@@ -21,13 +21,15 @@ global with sharing class contactpch1 {
         return;
       }
       if (
-        String.isBlank(conwrp.Id) ||
-        !conwrp.Id.startsWith('003') ||
-        conwrp.Id.length() < 18
+        (String.isBlank(conwrp.Id) || !conwrp.Id.startsWith('003')) &&
+        (conwrp.Id.length() != 18 &&
+        conwrp.Id.length() != 15)
       ) {
         ApiErrorHandler.setError(400, 'Provide valid contact Id plz');
         return;
       }
+
+      Contact con = [SELECT Id FROM Contact WHERE Id = :conwrp.Id];
 
       Contact updateCon = new Contact(
         Id = conwrp.Id,
@@ -43,8 +45,14 @@ global with sharing class contactpch1 {
           ' and ' +
           conwrp.Title
       );
+    } catch (QueryException ex) {
+      ApiErrorHandler.setError(
+        400,
+        'Query Error: Not a valid Id' + ex.getMessage()
+      );
+      return;
     } catch (Exception ex) {
-      ApiErrorHandler.setError(500, 'Internal Error' + ex.getMessage());
+      ApiErrorHandler.setError(500, 'Internal Error ' + ex.getMessage());
       return;
     }
   }

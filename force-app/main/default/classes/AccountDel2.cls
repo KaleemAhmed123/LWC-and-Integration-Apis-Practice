@@ -10,7 +10,11 @@ global with sharing class AccountDel2 {
     List<Account> delAcc = [SELECT Id, Name FROM Account WHERE Id = :Id];
 
     // 001dM00001vrRdSQA
-    if (!Id.startsWith('001') || id.length() < 18) {
+    if (
+      !String.isBlank(Id) && !Id.startsWith('001') ||
+      (id.length() != 18 &&
+      id.length() != 15)
+    ) {
       ApiErrorHandler.setError(500, 'Invalid Account ID!');
       return;
     }
@@ -25,8 +29,12 @@ global with sharing class AccountDel2 {
         for (contact con : acc.contacts) {
           con.AccountId = null;
         }
+        for (Opportunity opp : acc.Opportunities) {
+          opp.AccountId = null;
+        }
         update acc.contacts;
-        cascadeMessage = 'Contact Exist Now Standalone with no Parent Id.';
+        update acc.Opportunities;
+        cascadeMessage = 'Related records exist now standalone with no Parent Account.';
       }
 
       delete acc;
