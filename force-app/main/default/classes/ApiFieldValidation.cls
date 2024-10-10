@@ -1,5 +1,5 @@
-global with sharing class ApiFieldValidation {
-  public static Boolean isValidId(String Id, String pref) {
+public with sharing class ApiFieldValidation {
+  private static Boolean isValidId(String Id, String pref) {
     if (String.isBlank(Id)) {
       return false;
     }
@@ -8,11 +8,47 @@ global with sharing class ApiFieldValidation {
     }
     return true;
   }
-  public static Boolean isValidEmail(String email) {
+  private static Boolean isValidEmail(String email) {
     if (String.isBlank(email))
       return false;
     String emailRegex = '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$';
     return Pattern.matches(emailRegex, email);
+  }
+
+  public static Boolean isValidPicklist(
+    String objectName,
+    String picklistFieldName,
+    String value
+  ) {
+    if (String.isBlank(value)) {
+      return false;
+    }
+
+    Schema.SObjectType sObjectType = Schema.getGlobalDescribe().get(objectName);
+    if (sObjectType == null) {
+      return false;
+    }
+
+    Map<String, Schema.SObjectField> fieldMap = sObjectType
+      ?.getDescribe()
+      .fields.getMap();
+    if (!fieldMap?.containsKey(picklistFieldName)) {
+      return false;
+    }
+
+    Schema.DescribeFieldResult fieldResult = fieldMap
+      ?.get(picklistFieldName)
+      ?.getDescribe();
+
+    List<Schema.PicklistEntry> picklistValues = fieldResult
+      ?.getPicklistValues();
+    for (Schema.PicklistEntry entry : picklistValues) {
+      if (entry?.getValue()?.equals(value)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
 

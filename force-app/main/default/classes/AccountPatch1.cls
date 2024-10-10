@@ -2,8 +2,6 @@
 global with sharing class AccountPatch1 {
   @HttpPatch
   global static void updatePhone() {
-    RestResponse res = RestContext.response;
-
     try {
       RestRequest req = RestContext.request;
       accWrapper accWrapped = (accWrapper) JSON.deserialize(

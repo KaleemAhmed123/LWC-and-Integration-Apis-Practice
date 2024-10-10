@@ -11,6 +11,13 @@ global class accountc3 {
       ApiErrorHandler.setError(400, 'Please provide a valid Industry.');
       return;
     }
+    if (!ApiFieldValidation.isValidPicklist('Account', 'Industry', industry)) {
+      ApiErrorHandler.setError(
+        400,
+        industry + ' is not a valid picklist value.'
+      );
+      return;
+    }
 
     try {
       accList = [
