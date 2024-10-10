@@ -41,9 +41,9 @@ global with sharing class CustomObjectApi2 {
   }
 
   public class ProjectWrapper {
-    String Id;
-    Decimal budget;
-    String status;
-    String owner;
+    public String Id;
+    public Decimal budget;
+    public String status;
+    public String owner;
   }
 }

@@ -38,7 +38,7 @@ global with sharing class OpportunityPch1 {
   }
 
   public class oppWrapper {
-    String StageName;
-    String Id;
+    public String StageName;
+    public String Id;
   }
 }

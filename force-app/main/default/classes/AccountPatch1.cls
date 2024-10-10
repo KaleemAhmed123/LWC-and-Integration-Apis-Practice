@@ -40,7 +40,7 @@ global with sharing class AccountPatch1 {
   }
 
   public class accWrapper {
-    String Phone;
-    String Id;
+    public String Phone;
+    public String Id;
   }
 }

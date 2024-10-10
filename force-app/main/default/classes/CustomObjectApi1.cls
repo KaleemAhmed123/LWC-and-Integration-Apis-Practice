@@ -51,12 +51,12 @@ global with sharing class CustomObjectApi1 {
   }
 
   public class ProjectWrapper {
-    String startDate;
-    String endDate;
-    String budget;
-    String status;
-    String owner;
-    String projectType;
+    public String startDate;
+    public String endDate;
+    public String budget;
+    public String status;
+    public String owner;
+    public String projectType;
   }
 }
 

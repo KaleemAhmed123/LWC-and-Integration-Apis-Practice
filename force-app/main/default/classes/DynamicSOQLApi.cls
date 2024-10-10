@@ -1,13 +1,14 @@
 @RestResource(urlMapping='/dynamic/*')
 global class DynamicSOQLApi {
   @HttpGet
-  global static List<sObject> call() {
+  global static void getFilteredRecords() {
     try {
       String objName = RestContext.request.requestURI.substringAfterLast('/');
       Map<String, String> queryParams = RestContext.request.params;
       if (queryParams.size() == 0) {
         String query = 'SELECT Id FROM ' + objName + ' LIMIT 10';
-        return Database.query(query);
+        ApiResponseHandler.setResponse(200, Database.query(query));
+        return;
       }
 
       List<String> selectFields = new List<String>();
@@ -15,6 +16,7 @@ global class DynamicSOQLApi {
       for (String key : queryParams.keySet()) {
         selectFields.add(key);
         String value = queryParams.get(key);
+
         conditions.add(key + ' = \'' + String.escapeSingleQuotes(value) + '\'');
       }
 
@@ -29,9 +31,14 @@ global class DynamicSOQLApi {
 
       system.debug('query is: ' + query);
       List<sObject> result = Database.query(query);
-      return result;
+      ApiResponseHandler.setResponse(200, result);
+    } catch (QueryException e) {
+      ApiErrorHandler.setError(
+        400,
+        'Query Error: (Provide only valid fields)' + e.getMessage()
+      );
     } catch (Exception e) {
-      ApiErrorHandler.setError(500, 'Internal error' + e.getMessage());
+      ApiErrorHandler.setError(500, 'Internal error ' + e.getMessage());
     }
   }
 

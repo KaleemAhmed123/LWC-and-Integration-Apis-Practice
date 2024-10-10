@@ -7,7 +7,7 @@ global class opportunityc1 {
   global static void getOppsByName() {
     String name = RestContext.request.params.get('name');
 
-    if (name == null || name == '') {
+    if (String.isBlank(name)) {
       ApiErrorHandler.setError(400, 'Provide a name please. ');
       return;
     }
@@ -20,13 +20,9 @@ global class opportunityc1 {
         FROM Opportunity
         WHERE Name LIKE :wildAddedName
       ];
-      RestResponse res = RestContext.response;
-      res.statusCode = 200;
-      res.responseBody = Blob.valueOf(JSON.serialize(oppList));
+      ApiResponseHandler.setResponse(200, oppList);
     } catch (Exception e) {
       ApiErrorHandler.setError(500, 'Internal Error');
     }
-  }
-  global class RestException extends Exception {
   }
 }

@@ -4,10 +4,10 @@ global class AccountAPI {
     global static List<Account> getAccount() {
         List<Account> accList = new List<Account>();
         try{
-            accList = [SELECT Name, Id FROM Account LIMIT 10];
+            accList = [SELECT Name, Website, Type, Id FROM Account LIMIT 10];
         } catch(Exception e) {
-            system.debug('Error');
-            throw new RestException('Error ' + e.getMessage());
+            ApiErrorHandler.setError(500, 'Something went wrong.');
+            return;
         }
         
         return accList;

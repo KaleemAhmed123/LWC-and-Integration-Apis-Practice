@@ -50,8 +50,8 @@ global with sharing class contactpch1 {
   }
 
   public class contactWrapper {
-    String Id;
-    String Email;
-    String Title;
+    public String Id;
+    public String Email;
+    public String Title;
   }
 }
